@@ -3,14 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>For Emma 💕</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>StudyTogether 📚</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
     <style>
+      :root {
+        --bg: #0f0e17;
+        --surface: #1a1826;
+        --surface2: #232136;
+        --border: #2d2b3d;
+        --accent: #e0a96d;
+        --accent2: #9d7cd8;
+        --accent3: #7dcfb6;
+        --text: #f5f0e8;
+        --muted: #8b849c;
+        --danger: #f7768e;
+        --success: #9ece6a;
+        --glow: rgba(224, 169, 109, 0.15);
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -18,844 +31,1519 @@
       }
 
       body {
-        font-family: "Poppins", sans-serif;
-        overflow: hidden;
-        background: linear-gradient(
-          135deg,
-          #fff5f7 0%,
-          #ffe4ec 50%,
-          #ffd6e0 100%
-        );
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
       }
 
+      /* Animated background */
       body::before {
         content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        position: fixed;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
         background:
           radial-gradient(
-            circle at 20% 30%,
-            rgba(255, 192, 203, 0.1) 0%,
+            ellipse at 20% 20%,
+            rgba(157, 124, 216, 0.08) 0%,
             transparent 50%
           ),
           radial-gradient(
-            circle at 80% 70%,
-            rgba(255, 182, 193, 0.1) 0%,
+            ellipse at 80% 80%,
+            rgba(224, 169, 109, 0.06) 0%,
             transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 50% 50%,
+            rgba(125, 207, 182, 0.04) 0%,
+            transparent 60%
           );
+        animation: bgShift 20s ease-in-out infinite alternate;
         pointer-events: none;
+        z-index: 0;
       }
 
-      .screen {
-        display: none;
-        width: 100%;
-        height: 100%;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        position: relative;
-        opacity: 0;
-        transition: opacity 0.8s ease-in-out;
-      }
-
-      .screen.active {
-        display: flex;
-        animation: fadeInScreen 0.8s ease-in-out forwards;
-      }
-
-      /* Loader */
-      .loader {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #fff5f7 0%, #ffe4ec 100%);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-      }
-
-      .loader.active {
-        display: flex;
-        animation: fadeIn 0.3s ease-in;
-      }
-
-      .heart-loader {
-        position: relative;
-        width: 100px;
-        height: 100px;
-        animation: heartBeat 1s ease-in-out infinite;
-      }
-
-      .heart-loader::before,
-      .heart-loader::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        width: 52px;
-        height: 80px;
-        border-radius: 50px 50px 0 0;
-        background: linear-gradient(135deg, #ff6b9d 0%, #c9184a 100%);
-      }
-
-      .heart-loader::before {
-        left: 50px;
-        transform: rotate(-45deg);
-        transform-origin: 0 100%;
-      }
-
-      .heart-loader::after {
-        left: 0;
-        transform: rotate(45deg);
-        transform-origin: 100% 100%;
-      }
-
-      .loader-text {
-        margin-top: 120px;
-        font-size: 1.2rem;
-        color: #c9184a;
-        font-weight: 300;
-        letter-spacing: 2px;
-      }
-
-      @keyframes heartBeat {
-        0%,
+      @keyframes bgShift {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+        }
         100% {
-          transform: scale(1);
-        }
-        25% {
-          transform: scale(1.1);
-        }
-        50% {
-          transform: scale(1);
-        }
-        75% {
-          transform: scale(1.15);
+          transform: translate(2%, 2%) rotate(3deg);
         }
       }
 
-      @keyframes fadeInScreen {
-        from {
-          opacity: 0;
-          transform: scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
+      .app {
+        position: relative;
+        z-index: 1;
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 24px 20px;
       }
 
-      /* Screen 1 - Flowers */
-      #screen1 h1 {
+      /* Header */
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .logo-icon {
+        width: 44px;
+        height: 44px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        box-shadow: 0 0 20px rgba(224, 169, 109, 0.3);
+      }
+
+      .logo h1 {
         font-family: "Playfair Display", serif;
-        font-size: 4rem;
+        font-size: 26px;
         font-weight: 700;
-        background: linear-gradient(135deg, #ff6b9d 0%, #c9184a 100%);
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        text-align: center;
-        margin-bottom: 30px;
-        letter-spacing: 2px;
-        animation: fadeIn 1s ease-in;
       }
 
-      #screen1 .subtitle {
-        font-family: "Poppins", sans-serif;
-        font-size: 1.2rem;
-        color: #c9184a;
-        font-weight: 300;
-        text-align: center;
-        margin-bottom: 60px;
-        letter-spacing: 3px;
-        animation: fadeIn 1.5s ease-in;
+      .logo p {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 2px;
       }
 
-      .flower-container {
+      .user-select {
         display: flex;
-        gap: 50px;
-        margin-bottom: 60px;
-        perspective: 1000px;
-      }
-
-      .flower {
-        width: 100px;
-        height: 100px;
-        position: relative;
-        animation: grow 2.5s ease-in-out infinite;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-        filter: drop-shadow(0 4px 8px rgba(255, 107, 157, 0.3));
-      }
-
-      .flower:hover {
-        transform: scale(1.2) rotate(10deg);
-      }
-
-      .flower:nth-child(2) {
-        animation-delay: 0.4s;
-      }
-
-      .flower:nth-child(3) {
-        animation-delay: 0.8s;
-      }
-
-      .petal {
-        width: 38px;
-        height: 38px;
-        background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
-        border-radius: 50% 50% 0 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform-origin: 0 0;
-        box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5);
-      }
-
-      .petal:nth-child(1) {
-        transform: rotate(0deg) translate(-19px, -19px);
-      }
-      .petal:nth-child(2) {
-        transform: rotate(72deg) translate(-19px, -19px);
-      }
-      .petal:nth-child(3) {
-        transform: rotate(144deg) translate(-19px, -19px);
-      }
-      .petal:nth-child(4) {
-        transform: rotate(216deg) translate(-19px, -19px);
-      }
-      .petal:nth-child(5) {
-        transform: rotate(288deg) translate(-19px, -19px);
-      }
-
-      .center {
-        width: 26px;
-        height: 26px;
-        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-        border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        box-shadow:
-          inset 0 2px 4px rgba(255, 255, 255, 0.6),
-          0 2px 6px rgba(255, 215, 0, 0.4);
-      }
-
-      .stem {
-        width: 5px;
-        height: 80px;
-        background: linear-gradient(180deg, #10b981 0%, #059669 100%);
-        position: absolute;
-        bottom: -80px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 3px;
-        box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
-      }
-
-      .leaf {
-        width: 20px;
-        height: 12px;
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        border-radius: 0 50% 50% 0;
-        position: absolute;
-        bottom: -40px;
-        left: -15px;
-        transform: rotate(-30deg);
-        box-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
-      }
-
-      button {
-        padding: 18px 60px;
-        font-size: 1.2rem;
-        font-family: "Poppins", sans-serif;
-        font-weight: 600;
-        background: linear-gradient(135deg, #ff6b9d 0%, #c9184a 100%);
-        color: white;
-        border: none;
+        align-items: center;
+        gap: 8px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
         border-radius: 50px;
+        padding: 6px 8px;
+      }
+
+      .user-btn {
+        padding: 8px 18px;
+        border-radius: 40px;
+        border: none;
         cursor: pointer;
-        box-shadow:
-          0 8px 20px rgba(255, 107, 157, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        letter-spacing: 1px;
-        position: relative;
-        overflow: hidden;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s;
+        background: transparent;
+        color: var(--muted);
       }
 
-      button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.3),
-          transparent
-        );
-        transition: left 0.5s;
+      .user-btn.active {
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: var(--bg);
+        box-shadow: 0 2px 12px rgba(224, 169, 109, 0.3);
       }
 
-      button:hover::before {
-        left: 100%;
+      /* Main Grid */
+      .main-grid {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 28px;
       }
 
-      button:hover {
-        transform: translateY(-3px);
-        box-shadow:
-          0 12px 28px rgba(255, 107, 157, 0.5),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      @media (max-width: 900px) {
+        .main-grid {
+          grid-template-columns: 1fr;
+        }
       }
 
-      button:active {
-        transform: translateY(-1px);
-        box-shadow:
-          0 6px 16px rgba(255, 107, 157, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      /* Calendar */
+      .calendar-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px;
       }
 
-      /* Screen 2 - Question */
-      #screen2 {
-        background: radial-gradient(circle at center, #fff5f7 0%, #ffe4ec 100%);
-      }
-
-      #screen2 h2 {
-        font-family: "Playfair Display", serif;
-        font-size: 3.5rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, #ff6b9d 0%, #c9184a 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-align: center;
-        margin-bottom: 100px;
-        letter-spacing: 1px;
-        animation: fadeIn 1s ease-in;
-      }
-
-      .question-container {
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(20px);
-        padding: 80px 100px;
-        border-radius: 30px;
-        box-shadow:
-          0 20px 60px rgba(255, 107, 157, 0.2),
-          inset 0 1px 0 rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-      }
-
-      .button-container {
+      .cal-header {
         display: flex;
-        gap: 40px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+      }
+
+      .cal-header h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+      }
+
+      .cal-nav {
+        display: flex;
+        gap: 8px;
+      }
+
+      .cal-nav button {
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--border);
+        background: var(--surface2);
+        color: var(--text);
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .cal-nav button:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .cal-grid-header {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        margin-bottom: 8px;
+      }
+
+      .cal-grid-header span {
+        text-align: center;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 4px 0;
+      }
+
+      .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+      }
+
+      .cal-day {
+        aspect-ratio: 1;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.2s;
         position: relative;
+        border: 1px solid transparent;
+        padding: 4px;
+        gap: 2px;
       }
 
-      #yesBtn {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        box-shadow:
-          0 8px 20px rgba(16, 185, 129, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        animation: pulseGreen 2s ease-in-out infinite;
+      .cal-day:hover:not(.empty) {
+        background: var(--surface2);
+        border-color: var(--border);
       }
 
-      #yesBtn:hover {
-        box-shadow:
-          0 12px 28px rgba(16, 185, 129, 0.5),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      .cal-day.today {
+        background: rgba(224, 169, 109, 0.12);
+        border-color: var(--accent);
+        color: var(--accent);
+        font-weight: 600;
       }
 
-      @keyframes pulseGreen {
-        0%,
-        100% {
-          box-shadow:
-            0 8px 20px rgba(16, 185, 129, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-        50% {
-          box-shadow:
-            0 8px 30px rgba(16, 185, 129, 0.6),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-      }
-
-      #noBtn {
-        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-        box-shadow:
-          0 8px 20px rgba(239, 68, 68, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        position: absolute;
-        left: 280px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      #noBtn:hover {
-        box-shadow:
-          0 12px 28px rgba(239, 68, 68, 0.5),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      }
-
-      /* Screen 3 - Love Message */
-      #screen3 {
+      .cal-day.selected {
         background: linear-gradient(
           135deg,
-          #fce7f3 0%,
-          #fbcfe8 50%,
-          #fecaca 100%
+          rgba(224, 169, 109, 0.2),
+          rgba(157, 124, 216, 0.2)
         );
+        border-color: var(--accent2);
       }
 
-      #screen3 h1 {
-        font-family: "Playfair Display", serif;
-        font-size: 5rem;
+      .cal-day.empty {
+        cursor: default;
+      }
+
+      .cal-day.other-month {
+        opacity: 0.25;
+      }
+
+      .dot-row {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        min-height: 10px;
+      }
+
+      .session-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .tick-mark {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        font-size: 8px;
+        color: var(--success);
         font-weight: 700;
-        background: linear-gradient(135deg, #c9184a 0%, #9d174d 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-align: center;
-        margin-bottom: 30px;
-        animation: pulseText 2s ease-in-out infinite;
-        letter-spacing: 2px;
       }
 
-      #screen3 .love-subtitle {
-        font-family: "Poppins", sans-serif;
-        font-size: 1.5rem;
-        color: #9d174d;
-        text-align: center;
-        font-weight: 300;
-        letter-spacing: 4px;
-        animation: fadeIn 2s ease-in;
+      /* Sidebar */
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
       }
 
-      @keyframes pulseText {
-        0%,
-        100% {
-          transform: scale(1);
-          filter: drop-shadow(0 4px 8px rgba(201, 24, 74, 0.3));
-        }
-        50% {
-          transform: scale(1.05);
-          filter: drop-shadow(0 6px 12px rgba(201, 24, 74, 0.5));
-        }
+      /* Day Panel */
+      .day-panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 24px;
       }
 
-      .hearts-container {
-        position: absolute;
+      .day-panel h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 18px;
+        margin-bottom: 16px;
+        color: var(--accent);
+      }
+
+      /* Add session form */
+      .add-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .form-input {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 14px;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 0.2s;
         width: 100%;
-        height: 100%;
+      }
+
+      .form-input:focus {
+        border-color: var(--accent2);
+      }
+
+      .form-input::placeholder {
+        color: var(--muted);
+      }
+
+      .add-btn {
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        border: none;
+        border-radius: 10px;
+        padding: 11px;
+        color: var(--bg);
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .add-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(224, 169, 109, 0.4);
+      }
+
+      /* Sessions list */
+      .sessions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 360px;
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+
+      .sessions-list::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sessions-list::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sessions-list::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 2px;
+      }
+
+      .session-card {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
         overflow: hidden;
-        pointer-events: none;
-        z-index: 1;
       }
 
-      .heart {
+      .session-card::before {
+        content: "";
         position: absolute;
-        font-size: 2.5rem;
-        animation: float 4s ease-in-out infinite;
-        opacity: 0;
-        filter: drop-shadow(0 2px 4px rgba(255, 107, 157, 0.4));
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        border-radius: 3px 0 0 3px;
       }
 
-      .heart:nth-child(1) {
-        left: 10%;
-        animation-delay: 0s;
-        font-size: 2rem;
+      .session-card.user-0::before {
+        background: var(--accent);
       }
-      .heart:nth-child(2) {
-        left: 25%;
-        animation-delay: 0.5s;
-        font-size: 2.8rem;
-      }
-      .heart:nth-child(3) {
-        left: 40%;
-        animation-delay: 1s;
-        font-size: 2.2rem;
-      }
-      .heart:nth-child(4) {
-        left: 55%;
-        animation-delay: 1.5s;
-        font-size: 3rem;
-      }
-      .heart:nth-child(5) {
-        left: 70%;
-        animation-delay: 2s;
-        font-size: 2.4rem;
-      }
-      .heart:nth-child(6) {
-        left: 85%;
-        animation-delay: 2.5s;
-        font-size: 2.6rem;
-      }
-      .heart:nth-child(7) {
-        left: 15%;
-        animation-delay: 3s;
-        font-size: 2rem;
-      }
-      .heart:nth-child(8) {
-        left: 60%;
-        animation-delay: 3.5s;
-        font-size: 2.8rem;
-      }
-      .heart:nth-child(9) {
-        left: 35%;
-        animation-delay: 0.8s;
-        font-size: 2.3rem;
-      }
-      .heart:nth-child(10) {
-        left: 75%;
-        animation-delay: 1.8s;
-        font-size: 2.5rem;
+      .session-card.user-1::before {
+        background: var(--accent2);
       }
 
-      .message-box {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(20px);
-        padding: 60px 80px;
-        border-radius: 30px;
-        box-shadow:
-          0 30px 80px rgba(255, 107, 157, 0.3),
-          inset 0 1px 0 rgba(255, 255, 255, 0.9);
-        border: 2px solid rgba(255, 255, 255, 0.6);
-        z-index: 10;
-        animation: floatMessage 3s ease-in-out infinite;
+      .session-card:hover {
+        border-color: var(--accent2);
+        transform: translateX(2px);
       }
 
-      @keyframes floatMessage {
+      .session-card.completed {
+        opacity: 0.6;
+      }
+
+      .session-card.active-timer {
+        border-color: var(--success);
+        box-shadow: 0 0 15px rgba(158, 206, 106, 0.2);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
         0%,
         100% {
-          transform: translateY(0);
+          box-shadow: 0 0 15px rgba(158, 206, 106, 0.2);
         }
         50% {
-          transform: translateY(-10px);
+          box-shadow: 0 0 25px rgba(158, 206, 106, 0.4);
         }
+      }
+
+      .session-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 6px;
+      }
+
+      .session-subject {
+        font-weight: 600;
+        font-size: 14px;
+        padding-left: 6px;
+      }
+
+      .session-meta {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding-left: 6px;
+      }
+
+      .session-time-label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .session-duration {
+        font-size: 11px;
+        background: var(--surface);
+        border-radius: 6px;
+        padding: 2px 7px;
+        color: var(--accent3);
+        font-weight: 500;
+      }
+
+      .session-who {
+        font-size: 11px;
+        color: var(--muted);
+        padding: 2px 8px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+      }
+
+      .session-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .timer-btn {
+        background: rgba(158, 206, 106, 0.15);
+        border: 1px solid var(--success);
+        border-radius: 8px;
+        color: var(--success);
+        padding: 4px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .timer-btn:hover {
+        background: rgba(158, 206, 106, 0.25);
+      }
+
+      .delete-btn {
+        background: rgba(247, 118, 142, 0.1);
+        border: 1px solid rgba(247, 118, 142, 0.3);
+        border-radius: 8px;
+        color: var(--danger);
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .delete-btn:hover {
+        background: rgba(247, 118, 142, 0.2);
+      }
+
+      .completed-badge {
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      /* Timer Modal */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(8px);
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-overlay.open {
+        display: flex;
+        animation: fadeIn 0.2s ease;
       }
 
       @keyframes fadeIn {
         from {
           opacity: 0;
-          transform: translateY(-20px);
         }
         to {
           opacity: 1;
-          transform: translateY(0);
         }
       }
 
-      @keyframes grow {
-        0%,
-        100% {
-          transform: scale(1) rotate(0deg);
-        }
-        50% {
-          transform: scale(1.15) rotate(5deg);
-        }
+      .timer-modal {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 40px;
+        width: 380px;
+        text-align: center;
+        position: relative;
+        animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       }
 
-      @keyframes float {
-        0% {
-          bottom: -50px;
+      @keyframes slideUp {
+        from {
+          transform: translateY(30px) scale(0.95);
           opacity: 0;
-          transform: translateX(0);
         }
-        25% {
+        to {
+          transform: translateY(0) scale(1);
           opacity: 1;
         }
-        50% {
-          transform: translateX(20px);
-        }
-        75% {
-          opacity: 1;
-        }
-        100% {
-          bottom: 100%;
-          opacity: 0;
-          transform: translateX(-20px);
-        }
       }
 
-      .sparkle {
+      .close-modal {
         position: absolute;
+        top: 16px;
+        right: 16px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--muted);
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+
+      .close-modal:hover {
+        color: var(--text);
+      }
+
+      .timer-emoji {
+        font-size: 40px;
+        margin-bottom: 12px;
+      }
+
+      .timer-subject {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        margin-bottom: 4px;
+      }
+
+      .timer-who-label {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 28px;
+      }
+
+      .timer-ring-wrapper {
+        position: relative;
+        width: 180px;
+        height: 180px;
+        margin: 0 auto 28px;
+      }
+
+      .timer-ring {
+        transform: rotate(-90deg);
+      }
+
+      .ring-bg {
+        fill: none;
+        stroke: var(--surface2);
+        stroke-width: 8;
+      }
+
+      .ring-progress {
+        fill: none;
+        stroke: url(#timerGrad);
+        stroke-width: 8;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 1s linear;
+      }
+
+      .timer-display {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .timer-time {
+        font-family: "Playfair Display", serif;
+        font-size: 40px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+
+      .timer-label-small {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .timer-controls {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+      }
+
+      .ctrl-btn {
+        padding: 12px 28px;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+
+      .ctrl-btn.primary {
+        background: linear-gradient(135deg, var(--success), var(--accent3));
+        color: var(--bg);
+        flex: 1;
+      }
+
+      .ctrl-btn.primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(158, 206, 106, 0.4);
+      }
+
+      .ctrl-btn.secondary {
+        background: var(--surface2);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .ctrl-btn.secondary:hover {
+        border-color: var(--accent);
+      }
+
+      .done-btn {
         width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 5;
+        padding: 14px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: var(--bg);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 12px;
       }
 
-      .sparkle-dot {
-        position: absolute;
+      .done-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(224, 169, 109, 0.4);
+      }
+
+      /* Legend */
+      .legend {
+        display: flex;
+        gap: 16px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        flex-wrap: wrap;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .legend-dot {
         width: 10px;
         height: 10px;
-        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
         border-radius: 50%;
-        animation: sparkle 3s ease-in-out infinite;
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
       }
 
-      @keyframes sparkle {
-        0%,
-        100% {
-          opacity: 0;
-          transform: scale(0) rotate(0deg);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1) rotate(180deg);
-        }
+      /* Empty state */
+      .empty-state {
+        text-align: center;
+        padding: 30px 16px;
+        color: var(--muted);
+        font-size: 13px;
       }
 
-      /* Confetti */
-      .confetti {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        background: #ff6b9d;
-        position: absolute;
-        animation: confettiFall 3s linear infinite;
+      .empty-state .es-emoji {
+        font-size: 32px;
+        margin-bottom: 8px;
       }
 
-      .confetti:nth-child(2n) {
-        background: #c9184a;
-      }
-      .confetti:nth-child(3n) {
-        background: #ffd700;
-      }
-      .confetti:nth-child(4n) {
-        background: #ff8fab;
+      /* Toast */
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: var(--surface);
+        border: 1px solid var(--success);
+        border-radius: 12px;
+        padding: 14px 20px;
+        font-size: 14px;
+        z-index: 200;
+        transform: translateY(80px);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
       }
 
-      @keyframes confettiFall {
-        0% {
-          top: -10%;
-          opacity: 1;
-        }
-        100% {
-          top: 110%;
-          opacity: 0;
-        }
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* Stats strip */
+      .stats-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-family: "Playfair Display", serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        font-size: 11px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .color-you {
+        color: var(--accent) !important;
+      }
+      .color-partner {
+        color: var(--accent2) !important;
+      }
+
+      select.form-input {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b849c' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 32px;
+      }
+
+      option {
+        background: #1a1826;
       }
     </style>
   </head>
   <body>
-    <!-- Screen 1: Flowers -->
-    <div id="screen1" class="screen active">
-      <h1>Happy Valentine's Day! 💕</h1>
-      <p class="subtitle">FOR MY SPECIAL SOMEONE</p>
-      <div class="flower-container">
-        <div class="flower">
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="center"></div>
-          <div class="stem">
-            <div class="leaf"></div>
+    <div class="app">
+      <!-- Header -->
+      <header>
+        <div class="logo">
+          <div class="logo-icon">📚</div>
+          <div>
+            <h1>StudyTogether</h1>
+            <p>Your shared study planner</p>
           </div>
         </div>
-        <div class="flower">
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="center"></div>
-          <div class="stem">
-            <div class="leaf"></div>
+        <div class="user-select">
+          <button class="user-btn active" id="userYou" onclick="setUser(0)">
+            👤 You
+          </button>
+          <button class="user-btn" id="userPartner" onclick="setUser(1)">
+            💜 Partner
+          </button>
+        </div>
+      </header>
+
+      <!-- Stats -->
+      <div class="stats-strip">
+        <div class="stat-card">
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-label">Sessions Total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value color-you" id="statYou">0</div>
+          <div class="stat-label">Your Sessions ✓</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value color-partner" id="statPartner">0</div>
+          <div class="stat-label">Partner Sessions ✓</div>
+        </div>
+      </div>
+
+      <!-- Main Grid -->
+      <div class="main-grid">
+        <!-- Calendar -->
+        <div class="calendar-card">
+          <div class="cal-header">
+            <h2 id="calTitle">Month Year</h2>
+            <div class="cal-nav">
+              <button onclick="changeMonth(-1)">‹</button>
+              <button onclick="changeMonth(1)">›</button>
+            </div>
+          </div>
+          <div class="cal-grid-header">
+            <span>Sun</span><span>Mon</span><span>Tue</span> <span>Wed</span
+            ><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background: var(--accent)"></div>
+              Your sessions
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background: var(--accent2)"></div>
+              Partner's sessions
+            </div>
+            <div class="legend-item">
+              <span style="color: var(--success); font-size: 14px">✓</span>
+              Completed
+            </div>
           </div>
         </div>
-        <div class="flower">
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="center"></div>
-          <div class="stem">
-            <div class="leaf"></div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <div class="day-panel">
+            <h3 id="dayTitle">Select a day</h3>
+
+            <!-- Add session form -->
+            <div class="add-form">
+              <input
+                class="form-input"
+                id="subjectInput"
+                placeholder="Subject (e.g. Math, Biology...)"
+              />
+              <div class="form-row">
+                <input class="form-input" id="timeInput" type="time" />
+                <select class="form-input" id="durationInput">
+                  <option value="15">15 min</option>
+                  <option value="30">30 min</option>
+                  <option value="45">45 min</option>
+                  <option value="60" selected>1 hour</option>
+                  <option value="90">1.5 hours</option>
+                  <option value="120">2 hours</option>
+                  <option value="180">3 hours</option>
+                </select>
+              </div>
+              <button class="add-btn" onclick="addSession()">
+                + Add Session
+              </button>
+            </div>
+
+            <!-- Sessions -->
+            <div class="sessions-list" id="sessionsList">
+              <div class="empty-state">
+                <div class="es-emoji">📅</div>
+                Pick a day to add study sessions
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <button onclick="showLoader('screen2')">Next →</button>
     </div>
 
-    <!-- Screen 2: Question -->
-    <div id="screen2" class="screen">
-      <div class="question-container">
-        <h2>Will you be my Valentine? 💖</h2>
-        <div class="button-container">
-          <button id="yesBtn" onclick="showLoader('screen3')">Yes! 💕</button>
-          <button id="noBtn">No</button>
+    <!-- Timer Modal -->
+    <div class="modal-overlay" id="timerModal">
+      <div class="timer-modal">
+        <button class="close-modal" onclick="closeTimer()">✕</button>
+        <div class="timer-emoji" id="timerEmoji">📖</div>
+        <div class="timer-subject" id="timerSubject">Subject</div>
+        <div class="timer-who-label" id="timerWho">Who's studying</div>
+
+        <div class="timer-ring-wrapper">
+          <svg
+            class="timer-ring"
+            width="180"
+            height="180"
+            viewBox="0 0 180 180"
+          >
+            <defs>
+              <linearGradient
+                id="timerGrad"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" style="stop-color: var(--success)" />
+                <stop offset="100%" style="stop-color: var(--accent3)" />
+              </linearGradient>
+            </defs>
+            <circle class="ring-bg" cx="90" cy="90" r="80" />
+            <circle
+              class="ring-progress"
+              id="ringProgress"
+              cx="90"
+              cy="90"
+              r="80"
+              stroke-dasharray="502.65"
+              stroke-dashoffset="0"
+            />
+          </svg>
+          <div class="timer-display">
+            <div class="timer-time" id="timerDisplay">00:00</div>
+            <div class="timer-label-small" id="timerStatus">ready</div>
+          </div>
         </div>
+
+        <div class="timer-controls" id="timerControls">
+          <button class="ctrl-btn secondary" onclick="closeTimer()">
+            Cancel
+          </button>
+          <button
+            class="ctrl-btn primary"
+            id="startPauseBtn"
+            onclick="startPauseTimer()"
+          >
+            ▶ Start
+          </button>
+        </div>
+        <button
+          class="done-btn"
+          id="doneBtn"
+          style="display: none"
+          onclick="finishSession()"
+        >
+          ✓ Mark as Complete!
+        </button>
       </div>
     </div>
 
-    <!-- Screen 3: Love Message -->
-    <div id="screen3" class="screen">
-      <div class="hearts-container">
-        <div class="heart">❤️</div>
-        <div class="heart">💕</div>
-        <div class="heart">💖</div>
-        <div class="heart">💗</div>
-        <div class="heart">💓</div>
-        <div class="heart">💝</div>
-        <div class="heart">❤️</div>
-        <div class="heart">💕</div>
-        <div class="heart">💖</div>
-        <div class="heart">💗</div>
-      </div>
-      <div class="sparkle" id="sparkleContainer"></div>
-      <div class="message-box">
-        <h1>I Love You 💕</h1>
-      </div>
-    </div>
-
-    <!-- Loader -->
-    <div id="loader" class="loader">
-      <div class="heart-loader"></div>
-      <p class="loader-text">Loading magic...</p>
+    <!-- Toast -->
+    <div class="toast" id="toast">
+      <span>🎉</span>
+      <span id="toastMsg">Session completed!</span>
     </div>
 
     <script>
-      let noButtonClickCount = 0;
+      // ==================== STATE ====================
+      let currentUser = 0; // 0 = you, 1 = partner
+      let selectedDate = null;
+      let currentMonth = new Date();
+      let sessions = {}; // { "YYYY-MM-DD": [...sessions] }
+      let timerSession = null;
+      let timerInterval = null;
+      let timerRunning = false;
+      let timerSeconds = 0;
+      let timerTotal = 0;
+      let timerDateKey = null;
+      let timerSessionId = null;
 
-      // Loader and screen navigation
-      function showLoader(targetScreen) {
-        const loader = document.getElementById("loader");
-        const currentScreen = document.querySelector(".screen.active");
+      const USERS = [
+        { name: "You", color: "var(--accent)", emoji: "👤" },
+        { name: "Partner", color: "var(--accent2)", emoji: "💜" },
+      ];
 
-        loader.classList.add("active");
+      const SUBJECT_EMOJIS = {
+        math: "🔢",
+        biology: "🧬",
+        chemistry: "⚗️",
+        physics: "⚡",
+        history: "📜",
+        english: "📝",
+        science: "🔬",
+        art: "🎨",
+        music: "🎵",
+        coding: "💻",
+        programming: "💻",
+        computer: "💻",
+        spanish: "🇪🇸",
+        french: "🇫🇷",
+        german: "🇩🇪",
+        language: "🌍",
+        economics: "📊",
+        geography: "🗺️",
+        philosophy: "🤔",
+        psychology: "🧠",
+        literature: "📚",
+        writing: "✍️",
+        reading: "📖",
+        default: "📚",
+      };
 
-        setTimeout(() => {
-          currentScreen.classList.remove("active");
-          loader.classList.remove("active");
-
-          setTimeout(() => {
-            document.getElementById(targetScreen).classList.add("active");
-
-            if (targetScreen === "screen3") {
-              createSparkles();
-              createConfetti();
-            }
-          }, 100);
-        }, 1500);
-      }
-
-      // No button behavior - runs away from cursor
-      const noBtn = document.getElementById("noBtn");
-
-      noBtn.addEventListener("mouseenter", function () {
-        moveButton();
-      });
-
-      noBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        moveButton();
-        noButtonClickCount++;
-
-        // After 3 attempts, make the yes button bigger
-        if (noButtonClickCount >= 3) {
-          const yesBtn = document.getElementById("yesBtn");
-          yesBtn.style.transform = "scale(1.3)";
-          yesBtn.style.animation = "pulseGreen 1s ease-in-out infinite";
+      function getEmoji(subject) {
+        const key = (subject || "").toLowerCase();
+        for (const [k, v] of Object.entries(SUBJECT_EMOJIS)) {
+          if (key.includes(k)) return v;
         }
-      });
-
-      function moveButton() {
-        const container = document.querySelector(".question-container");
-        const containerRect = container.getBoundingClientRect();
-
-        // Random position within container bounds
-        const maxX = 500;
-        const maxY = 250;
-        const minX = -300;
-        const minY = -150;
-
-        const randomX = Math.random() * (maxX - minX) + minX;
-        const randomY = Math.random() * (maxY - minY) + minY;
-
-        noBtn.style.left = randomX + "px";
-        noBtn.style.top = randomY + "px";
-
-        // Shake animation when it moves
-        noBtn.style.animation = "shake 0.3s";
-        setTimeout(() => {
-          noBtn.style.animation = "";
-        }, 300);
+        return SUBJECT_EMOJIS.default;
       }
 
-      // Add shake animation
-      const style = document.createElement("style");
-      style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                25% { transform: translateX(-5px); }
-                75% { transform: translateX(5px); }
-            }
-        `;
-      document.head.appendChild(style);
-
-      // Create sparkles for final screen
-      function createSparkles() {
-        const container = document.getElementById("sparkleContainer");
-        const sparkleCount = 30;
-
-        for (let i = 0; i < sparkleCount; i++) {
-          const sparkle = document.createElement("div");
-          sparkle.className = "sparkle-dot";
-          sparkle.style.left = Math.random() * 100 + "%";
-          sparkle.style.top = Math.random() * 100 + "%";
-          sparkle.style.animationDelay = Math.random() * 3 + "s";
-          container.appendChild(sparkle);
+      // ==================== STORAGE ====================
+      async function saveData() {
+        try {
+          await window.storage.set(
+            "study-sessions",
+            JSON.stringify(sessions),
+            true,
+          );
+        } catch (e) {
+          console.log("Storage save error", e);
         }
       }
 
-      // Create confetti
-      function createConfetti() {
-        const screen = document.getElementById("screen3");
-        const confettiCount = 50;
-
-        for (let i = 0; i < confettiCount; i++) {
-          const confetti = document.createElement("div");
-          confetti.className = "confetti";
-          confetti.style.left = Math.random() * 100 + "%";
-          confetti.style.animationDelay = Math.random() * 3 + "s";
-          confetti.style.animationDuration = Math.random() * 2 + 2 + "s";
-          confetti.style.width = Math.random() * 8 + 4 + "px";
-          confetti.style.height = Math.random() * 8 + 4 + "px";
-          confetti.style.borderRadius = Math.random() > 0.5 ? "50%" : "0";
-          screen.appendChild(confetti);
+      async function loadData() {
+        try {
+          const res = await window.storage.get("study-sessions", true);
+          if (res && res.value) {
+            sessions = JSON.parse(res.value);
+          }
+        } catch (e) {
+          sessions = {};
         }
+        renderCalendar();
+        updateStats();
+        if (selectedDate) renderSessions();
       }
 
-      // Add click interaction to flowers on screen 1
-      document.addEventListener("DOMContentLoaded", function () {
-        const flowers = document.querySelectorAll(".flower");
-        flowers.forEach((flower) => {
-          flower.addEventListener("click", function () {
-            this.style.animation = "none";
-            setTimeout(() => {
-              this.style.animation = "grow 2.5s ease-in-out infinite";
-            }, 10);
+      // ==================== USER ====================
+      function setUser(u) {
+        currentUser = u;
+        document.getElementById("userYou").className =
+          "user-btn" + (u === 0 ? " active" : "");
+        document.getElementById("userPartner").className =
+          "user-btn" + (u === 1 ? " active" : "");
+      }
+
+      // ==================== CALENDAR ====================
+      function dateKey(d) {
+        return d.toISOString().slice(0, 10);
+      }
+
+      function changeMonth(dir) {
+        currentMonth.setMonth(currentMonth.getMonth() + dir);
+        renderCalendar();
+      }
+
+      function renderCalendar() {
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        const year = currentMonth.getFullYear();
+        const month = currentMonth.getMonth();
+        document.getElementById("calTitle").textContent =
+          `${months[month]} ${year}`;
+
+        const grid = document.getElementById("calGrid");
+        grid.innerHTML = "";
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const prevDays = new Date(year, month, 0).getDate();
+        const today = new Date();
+        const todayKey = dateKey(today);
+
+        // Prev month days
+        for (let i = firstDay - 1; i >= 0; i--) {
+          const d = document.createElement("div");
+          d.className = "cal-day other-month";
+          d.innerHTML = `<span>${prevDays - i}</span><div class="dot-row"></div>`;
+          grid.appendChild(d);
+        }
+
+        // Current month
+        for (let day = 1; day <= daysInMonth; day++) {
+          const d = new Date(year, month, day);
+          const key = dateKey(d);
+          const daySessions = sessions[key] || [];
+          const completed = daySessions.filter((s) => s.completed).length;
+
+          let cls = "cal-day";
+          if (key === todayKey) cls += " today";
+          if (selectedDate && key === selectedDate) cls += " selected";
+
+          // Dots
+          const userDots = [
+            daySessions.filter((s) => s.user === 0),
+            daySessions.filter((s) => s.user === 1),
+          ];
+          let dotsHtml = '<div class="dot-row">';
+          const dotColors = ["var(--accent)", "var(--accent2)"];
+          userDots.forEach((ud, ui) => {
+            const col = dotColors[ui];
+            ud.slice(0, 3).forEach(() => {
+              dotsHtml +=
+                '<div class="session-dot" style="background:' +
+                col +
+                '"></div>';
+            });
           });
-        });
-      });
+          dotsHtml += "</div>";
+
+          const tickHtml =
+            completed > 0
+              ? `<span class="tick-mark">✓${completed > 1 ? completed : ""}</span>`
+              : "";
+
+          const el = document.createElement("div");
+          el.className = cls;
+          el.innerHTML = `${tickHtml}<span>${day}</span>${dotsHtml}`;
+          el.onclick = () => selectDay(key, day);
+          grid.appendChild(el);
+        }
+
+        // Fill remaining
+        const total = firstDay + daysInMonth;
+        const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+        for (let i = 1; i <= remaining; i++) {
+          const d = document.createElement("div");
+          d.className = "cal-day other-month";
+          d.innerHTML = `<span>${i}</span><div class="dot-row"></div>`;
+          grid.appendChild(d);
+        }
+      }
+
+      function selectDay(key, day) {
+        selectedDate = key;
+        const months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        const [y, m, d2] = key.split("-").map(Number);
+        const dow = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ][new Date(y, m - 1, d2).getDay()];
+        document.getElementById("dayTitle").textContent =
+          `${dow}, ${months[m - 1]} ${d2}`;
+
+        // Default time to now
+        const now = new Date();
+        document.getElementById("timeInput").value =
+          `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+
+        renderCalendar();
+        renderSessions();
+      }
+
+      // ==================== SESSIONS ====================
+      function addSession() {
+        if (!selectedDate) {
+          showToast("Pick a day first! 📅", "#f7768e");
+          return;
+        }
+        const subject = document.getElementById("subjectInput").value.trim();
+        const time = document.getElementById("timeInput").value;
+        const duration = parseInt(
+          document.getElementById("durationInput").value,
+        );
+        if (!subject) {
+          showToast("Enter a subject! ✏️", "#f7768e");
+          return;
+        }
+        if (!sessions[selectedDate]) sessions[selectedDate] = [];
+
+        const session = {
+          id: Date.now(),
+          subject,
+          time: time || "09:00",
+          duration,
+          user: currentUser,
+          completed: false,
+          emoji: getEmoji(subject),
+        };
+
+        sessions[selectedDate].push(session);
+        sessions[selectedDate].sort((a, b) => a.time.localeCompare(b.time));
+        saveData();
+        renderCalendar();
+        renderSessions();
+        updateStats();
+        document.getElementById("subjectInput").value = "";
+        showToast("Session added! 📚");
+      }
+
+      function renderSessions() {
+        const list = document.getElementById("sessionsList");
+        const daySessions = sessions[selectedDate] || [];
+
+        if (!selectedDate) {
+          list.innerHTML =
+            '<div class="empty-state"><div class="es-emoji">📅</div>Pick a day to add study sessions</div>';
+          return;
+        }
+
+        if (daySessions.length === 0) {
+          list.innerHTML =
+            '<div class="empty-state"><div class="es-emoji">✨</div>No sessions yet. Add one above!</div>';
+          return;
+        }
+
+        list.innerHTML = daySessions
+          .map((s) => {
+            const isActive = timerSessionId === s.id;
+            const dur =
+              s.duration >= 60 ? s.duration / 60 + "h" : s.duration + "m";
+            const cardCls =
+              "session-card user-" +
+              s.user +
+              (s.completed ? " completed" : "") +
+              (isActive ? " active-timer" : "");
+            const actionBtn = s.completed
+              ? '<span class="completed-badge">&#x2705;</span>'
+              : '<button class="timer-btn" onclick="openTimer(\'' +
+                selectedDate +
+                "'," +
+                s.id +
+                ')">&#x23F1; Start</button>';
+            const deleteBtn =
+              '<button class="delete-btn" onclick="deleteSession(\'' +
+              selectedDate +
+              "'," +
+              s.id +
+              ')">&times;</button>';
+            return (
+              '<div class="' +
+              cardCls +
+              '" id="sc-' +
+              s.id +
+              '">' +
+              '<div class="session-top">' +
+              '<div class="session-subject">' +
+              s.emoji +
+              " " +
+              s.subject +
+              "</div>" +
+              '<div class="session-actions">' +
+              actionBtn +
+              deleteBtn +
+              "</div>" +
+              "</div>" +
+              '<div class="session-meta">' +
+              '<span class="session-time-label">&#x1F550; ' +
+              s.time +
+              "</span>" +
+              '<span class="session-duration">' +
+              dur +
+              "</span>" +
+              '<span class="session-who">' +
+              USERS[s.user].emoji +
+              " " +
+              USERS[s.user].name +
+              "</span>" +
+              "</div>" +
+              "</div>"
+            );
+          })
+          .join("");
+      }
+
+      function deleteSession(dateKey, id) {
+        sessions[dateKey] = (sessions[dateKey] || []).filter(
+          (s) => s.id !== id,
+        );
+        saveData();
+        renderCalendar();
+        renderSessions();
+        updateStats();
+      }
+
+      function updateStats() {
+        const all = Object.values(sessions).flat();
+        document.getElementById("statTotal").textContent = all.length;
+        document.getElementById("statYou").textContent = all.filter(
+          (s) => s.user === 0 && s.completed,
+        ).length;
+        document.getElementById("statPartner").textContent = all.filter(
+          (s) => s.user === 1 && s.completed,
+        ).length;
+      }
+
+      // ==================== TIMER ====================
+      function openTimer(dateKey2, id) {
+        const daySessions = sessions[dateKey2] || [];
+        const session = daySessions.find((s) => s.id === id);
+        if (!session) return;
+
+        timerSession = session;
+        timerDateKey = dateKey2;
+        timerSessionId = id;
+        timerTotal = session.duration * 60;
+        timerSeconds = timerTotal;
+        timerRunning = false;
+        clearInterval(timerInterval);
+
+        document.getElementById("timerEmoji").textContent = session.emoji;
+        document.getElementById("timerSubject").textContent = session.subject;
+        document.getElementById("timerWho").textContent =
+          `${USERS[session.user].emoji} ${USERS[session.user].name}'s session`;
+        document.getElementById("timerStatus").textContent = "ready";
+        document.getElementById("startPauseBtn").textContent = "▶ Start";
+        document.getElementById("timerControls").style.display = "flex";
+        document.getElementById("doneBtn").style.display = "none";
+
+        updateTimerDisplay();
+        document.getElementById("timerModal").classList.add("open");
+        renderSessions();
+      }
+
+      function closeTimer() {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        timerSessionId = null;
+        document.getElementById("timerModal").classList.remove("open");
+        renderSessions();
+      }
+
+      function startPauseTimer() {
+        if (timerRunning) {
+          timerRunning = false;
+          clearInterval(timerInterval);
+          document.getElementById("startPauseBtn").textContent = "▶ Resume";
+          document.getElementById("timerStatus").textContent = "paused";
+        } else {
+          timerRunning = true;
+          document.getElementById("startPauseBtn").textContent = "⏸ Pause";
+          document.getElementById("timerStatus").textContent = "studying...";
+          timerInterval = setInterval(() => {
+            timerSeconds--;
+            updateTimerDisplay();
+            if (timerSeconds <= 0) {
+              clearInterval(timerInterval);
+              timerRunning = false;
+              timerComplete();
+            }
+          }, 1000);
+        }
+      }
+
+      function updateTimerDisplay() {
+        const m = Math.floor(timerSeconds / 60);
+        const s = timerSeconds % 60;
+        document.getElementById("timerDisplay").textContent =
+          `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+
+        const progress = timerSeconds / timerTotal;
+        const circumference = 502.65;
+        document.getElementById("ringProgress").style.strokeDashoffset =
+          circumference * (1 - (1 - progress));
+        // Actually: full = 0 offset, empty = circumference offset
+        document.getElementById("ringProgress").style.strokeDashoffset =
+          circumference * progress;
+      }
+
+      function timerComplete() {
+        document.getElementById("timerStatus").textContent = "🎉 Done!";
+        document.getElementById("timerControls").style.display = "none";
+        document.getElementById("doneBtn").style.display = "block";
+        document.getElementById("ringProgress").style.strokeDashoffset = "0";
+        // Play bell-ish
+        try {
+          const ctx = new AudioContext();
+          const o = ctx.createOscillator();
+          const g = ctx.createGain();
+          o.connect(g);
+          g.connect(ctx.destination);
+          o.frequency.setValueAtTime(880, ctx.currentTime);
+          o.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.5);
+          g.gain.setValueAtTime(0.3, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1);
+          o.start();
+          o.stop(ctx.currentTime + 1);
+        } catch (e) {}
+      }
+
+      function finishSession() {
+        const daySessions = sessions[timerDateKey] || [];
+        const session = daySessions.find((s) => s.id === timerSessionId);
+        if (session) {
+          session.completed = true;
+          saveData();
+        }
+        updateStats();
+        renderCalendar();
+        closeTimer();
+        showToast(
+          `✓ ${session ? session.subject : "Session"} complete! Well done! 🎉`,
+        );
+        renderSessions();
+      }
+
+      // ==================== TOAST ====================
+      function showToast(msg, color) {
+        const t = document.getElementById("toast");
+        document.getElementById("toastMsg").textContent = msg;
+        t.style.borderColor = color || "var(--success)";
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 3000);
+      }
+
+      // ==================== INIT ====================
+      async function init() {
+        await loadData();
+        // Select today by default
+        const today = new Date();
+        selectDay(dateKey(today), today.getDate());
+      }
+
+      // Reload shared data periodically
+      setInterval(async () => {
+        if (!timerRunning) {
+          await loadData();
+        }
+      }, 15000);
+
+      init();
     </script>
   </body>
 </html>
